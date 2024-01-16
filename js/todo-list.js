@@ -1,54 +1,54 @@
-const todoForm = document.querySelector("#todo-form");
-const todoInput = document.querySelector("#todo-form input");
-const toDoList = document.querySelector("#todo-list");
+const toDoForm = document.getElementById("todo-form");
+const toDoInput = document.querySelector("#todo-form input");
+const toDoList = document.getElementById("todo-list");
 
 const TODOS_KEY = "todos";
 
 let toDos = [];
 
-function saveToDos() {
+function saveTodos() {
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
-function deleteToDo(event) {
+function deleteTodo(event) {
   const li = event.target.parentElement;
   li.remove();
-  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-  saveToDos();
+  toDos = toDos.filter((toDO) => toDO.id !== parseInt(li.id));
+  saveTodos();
 }
 
-function paintToDo(newTodo) {
+function paintTodos(newTodo) {
   const li = document.createElement("li");
   li.id = newTodo.id;
   const span = document.createElement("span");
   span.innerText = newTodo.text;
   const button = document.createElement("button");
   button.innerText = "x";
-  button.addEventListener("cilck", deleteToDo);
+  button.addEventListener("click", deleteTodo);
   li.appendChild(span);
   li.appendChild(button);
   toDoList.appendChild(li);
 }
 
-function handleTodoSubmit(event) {
+function handleToDoSubmit(event) {
   event.preventDefault();
-  const newTodo = todoInput.value;
-  todoInput.value = "";
+  const newTodo = toDoInput.value;
+  toDoInput.value = "";
   const newTodoObj = {
     text: newTodo,
     id: Date.now(),
   };
   toDos.push(newTodoObj);
-  paintToDo(newTodoObj);
-  saveToDos();
+  paintTodos(newTodoObj);
+  saveTodos();
 }
 
-todoForm.addEventListener("submit", handleTodoSubmit);
+toDoForm.addEventListener("submit", handleToDoSubmit);
 
-const storedTodos = localStorage.getItem(TODOS_KEY);
+const storedTodo = localStorage.getItem(TODOS_KEY);
 
-if (storedTodos !== null) {
-  const parsedTodos = JSON.parse(storedTodos);
-  toDos = parsedTodos;
-  parsedTodos.forEach(paintToDo);
+if (storedTodo !== null) {
+  const parseToDos = JSON.parse(storedTodo);
+  toDos = parseToDos;
+  parseToDos.forEach(paintTodos);
 }
