@@ -17,7 +17,7 @@ function deleteTodo(event) {
   saveTodos();
 }
 
-function paintTodos(newTodo) {
+function paintTodo(newTodo) {
   const li = document.createElement("li");
   li.id = newTodo.id;
   const span = document.createElement("span");
@@ -39,7 +39,7 @@ function handleToDoSubmit(event) {
     id: Date.now(),
   };
   toDos.push(newTodoObj);
-  paintTodos(newTodoObj);
+  paintTodo(newTodoObj);
   saveTodos();
 }
 
@@ -48,12 +48,7 @@ toDoForm.addEventListener("submit", handleToDoSubmit);
 const storedTodo = localStorage.getItem(TODOS_KEY);
 
 if (storedTodo !== null) {
-  const parsedTodos = JSON.parse(storedTodo);
-  // JSON.parse()로 localStorage에 저장된 데이터를 javascipt도 읽을 수 있는 데이터로 바꿔줌.
-  toDos = parsedTodos;
-  // toDos에 위에서 바꾼 데이터 저장.
-  parsedTodos.forEach(paintTodos);
-  // 바꾼 데이터를 forEach()를 사용하여 요소 하나하나마다 paintTodos()가 적용될 수 있도록 함.
+  const parsedTodo = JSON.parse(storedTodo);
+  toDos = parsedTodo;
+  parsedTodo.forEach(paintTodo);
 }
-
-// 위 if문이 없다면 새로고침했을 때 페이지에 데이터가 남아있지 않음.
